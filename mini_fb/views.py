@@ -4,8 +4,8 @@ from .models import Profile
 
 # Create your views here.
 
-class HomePageView(ListView):
-    '''Show a listing of Quotes.'''
-    model = Profile # retrieve Quote objects from the databse
-    template_name = "mini_fb/home.html"
+class ShowAllProfilesView(ListView):
+    '''Show a listing of Profiles.'''
+    model = Profile # retrieve Profile objects from the databse
+    template_name = "mini_fb/show_all_profiles.html"
     context_object_name = "profiles"

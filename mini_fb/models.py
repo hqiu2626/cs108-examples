@@ -16,4 +16,4 @@ class Profile(models.Model):
     def __str__(self):
         '''Return a string representation of this profile.'''
 
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name}' # representation for profile in admin database

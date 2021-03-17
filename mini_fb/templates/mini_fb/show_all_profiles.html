@@ -1,0 +1,29 @@
+<!-- mini_fb/home.html -->
+
+<h1>MiniFacebook</h1>
+<h2>Showing all Profiles</h2>
+
+<!-- display the context data -->
+
+<!-- Create a table to store name, city, and image with headers-->
+<table>
+<tr>
+    <th style="width:150px">Name</th>
+    <th style="width:150px">Hometown</th>
+    <th style="width:150px">Image</th>
+</tr>
+
+<!-- For loop to print out each name, city, and image -->
+
+{% for p in profiles %}
+    <tr>
+        <td>{{p.first_name}} {{p.last_name}}</td>
+        <td>{{p.city}}</td>
+        <td><img src="{{p.profile_image_url}}" style ="max-width:125;"></td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
