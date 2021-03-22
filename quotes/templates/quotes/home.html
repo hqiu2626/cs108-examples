@@ -10,7 +10,7 @@
 <ul>
 {% for quote in quotes %}
     <li>{{quote.text}} - {{quote.author}}<br>
-        <img src="{{quote.image_url}}" style ="max-width:400;">
+        <img src="{{quote.person.get_random_image}}" style ="max-width:400;">
 
     </li>
 {% endfor %}
