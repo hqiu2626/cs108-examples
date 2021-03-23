@@ -1,12 +1,13 @@
 <!-- mini_fb/show_profile_page.html -->
 
-
+<!-- extend from base.html -->
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
 
 <h1>Mini Facebook</h1>
 
+<!-- create table containing name, image, email. and city -->
 <table>
     <tr>
         <h3>{{profile}}</h3>
@@ -20,8 +21,40 @@
 <tr>
     <p>{{profile.city}}</p>
 </tr>
+
+<!-- create table for statuses that loops over all statuses -->
+
 </table>
 <h2> Status Messages </h2>
+
+{% for status in profile.get_status_messages %}
+
+<table>
+
+    <tr>
+    <th>
+        Time
+    </th>
+    <th>
+        Message
+    </th>
+    </tr>
+    
+    <!-- get status.timestamp and status.message -->
+    <tr>
+
+        <td style="padding-right:5%">
+            {{status.timestamp}}
+        </td>
+
+        <td>
+            {{status.message}}
+        </td>
+    </tr>
+
+</table>
+
+{% endfor %}
 
 {% endblock %}
 

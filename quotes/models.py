@@ -28,8 +28,8 @@ class Person(models.Model):
         return Quote.objects.filter(person=self)
 
             
-    def get_all_imagees(self):
-        '''Return all imagees for this Person.'''
+    def get_all_images(self):
+        '''Return all images for this Person.'''
 
         # use the object manager to filter Images by this person's pk:
         return Image.objects.filter(person=self)
