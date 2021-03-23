@@ -1,0 +1,27 @@
+<!-- mini_fb/show_profile_page.html -->
+
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h1>Mini Facebook</h1>
+
+<table>
+    <tr>
+        <h3>{{profile}}</h3>
+    </tr>
+<tr>
+    <img src="{{profile.profile_image_url}}" style ="max-width:400;">
+</tr>
+<tr>
+    <p>{{profile.email_address}}</p>
+</tr>
+<tr>
+    <p>{{profile.city}}</p>
+</tr>
+</table>
+<h2> Status Messages </h2>
+
+{% endblock %}
+
