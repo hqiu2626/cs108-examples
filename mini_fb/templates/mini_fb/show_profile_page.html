@@ -5,29 +5,78 @@
 
 {% block content %}
 
-<h1>Mini Facebook</h1>
 
 <!-- create table containing name, image, email. and city -->
 <table>
-    <tr>
-        <h3>{{profile}}</h3>
-    </tr>
+
 <tr>
-    <img src="{{profile.profile_image_url}}" style ="max-width:400;">
-</tr>
-<tr>
-    <p>{{profile.email_address}}</p>
-</tr>
-<tr>
-    <p>{{profile.city}}</p>
+    <h1>{{profile}}'s Profile Page</h1>
 </tr>
 
-<!-- create table for statuses that loops over all statuses -->
+<tr>
+
+    <td>
+        <img src="{{profile.profile_image_url}}" style ="max-width:400;">
+    </td>
+
+    <td>
+        <table>
+            <tr>
+                <td><b>Name</b></td>
+                <td>{{profile}}</td>
+              </tr>
+              <tr>
+                <td><b>Hometown</b></td>
+                <td>{{profile.city}}</td>
+              </tr>
+              <tr>
+                <td><b>Email Address</b></td>
+                <td>{{profile.email_address}}</td>
+              </tr>
+        </table>
+    </td>   
+
+</tr>
+
 
 </table>
+
+<h4><a href="{% url 'update_profile' profile.pk %}">Edit this profile</a></h4>
+
+<hr>
+
+
+
+
+<h1> Post a status message </h1>
+
+<form method="POST" action="{% url 'post_status_message' profile.pk %}"> <!-- HTTP POST to send data to the server -->
+    {% csrf_token %}
+
+    <!-- display the form context variable -->
+    
+    
+    <!-- {{form.as_p}} <!-- paragraph style  -->
+<table>
+    {{create_status_form}}
+    <tr>
+        <td>
+
+        </td>
+    <td>
+        <input type="submit" value="Share">
+    </td>
+</tr>
+</table>
+
+</form>
+
+
+
+
+<!-- create table for statuses that loops over all statuses -->
 <h2> Status Messages </h2>
 
-{% for status in profile.get_status_messages %}
 
 <table>
 
@@ -39,7 +88,8 @@
         Message
     </th>
     </tr>
-    
+
+    {% for status in profile.get_status_messages %}
     <!-- get status.timestamp and status.message -->
     <tr>
 
@@ -51,10 +101,9 @@
             {{status.message}}
         </td>
     </tr>
-
+{% endfor %}
 </table>
 
-{% endfor %}
 
 {% endblock %}
 

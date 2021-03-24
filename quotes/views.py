@@ -51,7 +51,7 @@ class CreateQuoteView(CreateView):
     template_name = "quotes/create_quote_form.html" #delegate the display to this template
 
 
-class UpdateQuoteView(UpdateView):
+class UpdateQuoteView(UpdateView): 
     ''' Update a new Quote object and store it in the database.'''
 
     model = Quote # which model to create
