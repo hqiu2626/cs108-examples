@@ -22,9 +22,9 @@
 
 {% for p in profiles %}
     <tr>
-        <td><a href="{% url 'profile' p.pk %}">{{p.first_name}} {{p.last_name}}</a></td>
+        <td><a href="{% url 'show_profile_page' p.pk %}">{{p.first_name}} {{p.last_name}}</a></td>
         <td>{{p.city}}</td>
-        <td><a href="{% url 'profile' p.pk %}"><img src="{{p.profile_image_url}}" style ="max-width:125;"></a></td>
+        <td><a href="{% url 'show_profile_page' p.pk %}"><img src="{{p.profile_image_url}}" style ="max-width:125;"></a></td>
     </tr>
 
     {% endfor %}
