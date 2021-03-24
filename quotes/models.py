@@ -1,5 +1,6 @@
 from django.db import models
 import random
+from django.urls import reverse
 
 # Create your models here.
 
@@ -48,6 +49,11 @@ class Quote(models.Model):
 
         return f'"{self.text}" - {self.person}'
 
+    def get_absolute_url(self):
+        '''Provide a url to show this object.'''
+
+        #'quote/<int:pk>'
+        return reverse('quote', kwargs={'pk':self.pk})
 
 class Image(models.Model):
     ''' Represent an image URL for a Person.'''

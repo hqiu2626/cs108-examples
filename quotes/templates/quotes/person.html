@@ -1,4 +1,7 @@
 <!-- quotes/person.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
 
 <h1>{{person}}</h1>
 
@@ -25,3 +28,5 @@
     
     {% endfor %}
     </ul>
+
+    {% endblock %}
