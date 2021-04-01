@@ -34,6 +34,31 @@
                 <td>{{profile.email_address}}</td>
               </tr>
         </table>
+    </td>
+    <td>
+                <h3> Post a status message </h3>
+
+                <form method="POST" enctype="multipart/form-data" 
+                action="{% url 'post_status_message' profile.pk %}"> <!-- HTTP POST to send data to the server -->
+                    {% csrf_token %}
+
+                    <!-- display the form context variable -->
+    
+    
+                    <!-- {{form.as_p}} <!-- paragraph style  -->
+                <table>
+                    {{create_status_form}}
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <input type="submit" value="Share">
+                        </td>
+                    </tr>
+                </table>
+
+                </form>
     </td>   
 
 </tr>
@@ -44,34 +69,6 @@
 <h4><a href="{% url 'update_profile' profile.pk %}">Edit this profile</a></h4>
 
 <hr>
-
-
-
-
-<h1> Post a status message </h1>
-
-<form method="POST" action="{% url 'post_status_message' profile.pk %}"> <!-- HTTP POST to send data to the server -->
-    {% csrf_token %}
-
-    <!-- display the form context variable -->
-    
-    
-    <!-- {{form.as_p}} <!-- paragraph style  -->
-<table>
-    {{create_status_form}}
-    <tr>
-        <td>
-
-        </td>
-    <td>
-        <input type="submit" value="Share">
-    </td>
-</tr>
-</table>
-
-</form>
-
-
 
 
 <!-- create table for statuses that loops over all statuses -->
@@ -98,8 +95,26 @@
         </td>
 
         <td>
-            {{status.message}}
+            <table>
+                <tr>
+                    <td>
+                    {{status.message}} 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    {% if status.image %}
+                    <img src='{{status.image.url}}' style='max-width: 400;'>
+                    {% endif %}
+                    </td>
+                </tr>
+            </table>
         </td>
+
+        <td>
+            <a href="{% url 'delete_status' profile_pk=profile.pk status_pk=status.pk %}">Delete</a>
+        </td>
+
     </tr>
 {% endfor %}
 </table>

@@ -36,6 +36,7 @@ class StatusMessage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
     message = models.CharField(max_length=50)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True) # an actual image
 
     def __str__(self):
         '''Return a string representation of this profile.'''

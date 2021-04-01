@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile
 from .forms import *
 from django.shortcuts import redirect
 from django.urls import reverse
+from quotes.forms import AddImageForm
 
 
 # Create your views here.
@@ -47,10 +48,54 @@ class UpdateProfileView(UpdateView):
     form_class = UpdateProfileForm
     template_name = "mini_fb/update_profile_form.html" #delegate the display to this template
 
+
+class DeleteStatusMessageView(DeleteView):
+    ''' Delete a new StatusMessage object'''
+    template_name = "mini_fb/delete_status_form.html"
+    queryset = StatusMessage.objects.all()
+
+    def get_context_data(self, **kwargs):
+        ''' returns the context data in the template '''
+        # obtains context data dictionary by callling super class
+        context = super(DeleteStatusMessageView, self).get_context_data(**kwargs)
+
+        # Find the status message object that we are trying to delete, and save it to a variable
+        st_msg = StatusMessage.objects.get(pk=self.kwargs['status_pk'])
+
+        # add to the dictionary of context data
+        context['st_msg'] = st_msg
+
+        # return context data
+        return context
+
+    def get_object(self):
+        ''' return StatusMessage object that should be deleted '''
+
+        # read the URL data values into variables   
+        profile_pk = self.kwargs['profile_pk']
+        status_pk = self.kwargs['status_pk']
+
+        # find the StatusMessage object, and return it
+        status = StatusMessage.objects.filter(pk=status_pk).first()
+        return status
+
+
+    def get_success_url(self):
+        ''' where the browser should bee directed after delete is complete '''
+
+        # read the URL data values into variables
+        profile_pk = self.kwargs['profile_pk']
+        status_pk = self.kwargs['status_pk']
+
+        # reverse to show the profile page
+        return reverse('show_profile_page', kwargs={'pk':profile_pk})
+
 def post_status_message(request, pk):
     '''
     Process a form submission to post a new status message.
     '''
+
+    profile = Profile.objects.get(pk=pk)
 
     # if and only if we are processing a POST request, try to read the data
     if request.method == 'POST':
@@ -58,21 +103,28 @@ def post_status_message(request, pk):
         # print(request.POST) # for debugging at the console
 
         # create the form object from the request's POST data
-        form = CreateStatusMessageForm(request.POST or None)
+        form = CreateStatusMessageForm(request.POST or None, request.FILES or None)
+
 
         if form.is_valid():
 
             # create the StatusMessage object with the data in the CreateStatusMessageForm
-            status_message = form.save(commit=False) # don't commit to database yet
+            #status_message = form.save(commit=False) # don't commit to database yet
 
             # find the profile that matches the `pk` in the URL
-            profile = Profile.objects.get(pk=pk)
+            #profile = Profile.objects.get(pk=pk)
 
             # attach FK profile to this status message
-            status_message.profile = profile
+            #status_message.profile = profile
 
             # now commit to database
-            status_message.save()
+            #status_message.save()
+
+
+            image = form.save(commit=False)
+            image.profile = profile
+            image.save()
+
 
     # redirect the user to the show_profile_page view
     url = reverse('show_profile_page', kwargs={'pk': pk})
