@@ -119,6 +119,31 @@
 {% endfor %}
 </table>
 
+<br>
+
+<h2>Friends</h2>
+
+{% if profile.get_friends %}
+    <table>
+        <th></th>
+        <th>Name</th>
+
+        {% for friend in profile.get_friends %}
+        <tr>
+            <td>
+                <img src="{{friend.profile_image_url}}" style="max-width: 200px;">
+            </td>
+            <td>
+                <a href="{% url 'show_profile_page' friend.pk%}">{{friend.first_name}} {{friend.last_name}}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    {{profile.first_name}} doesn't have any friends.
+{% endif %}
+
 
 {% endblock %}
 

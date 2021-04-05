@@ -12,6 +12,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=50)
     email_address = models.CharField(max_length=50)
     profile_image_url = models.URLField(blank=True)
+    friends = models.ManyToManyField("self")
 
     def __str__(self):
         '''Return a string representation of this profile.'''
@@ -29,6 +30,10 @@ class Profile(models.Model):
 
         #'quote/<int:pk>'
         return reverse('show_profile_page', kwargs={'pk':self.pk})
+
+    def get_friends(self):
+        ''' return all friends for this Profile '''
+        return self.friends.all()
 
 class StatusMessage(models.Model):
     ''' Represents status messages '''
