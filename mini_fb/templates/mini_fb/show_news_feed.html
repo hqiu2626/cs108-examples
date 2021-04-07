@@ -1,0 +1,24 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<a href="{% url 'show_profile_page' profile.pk %}">Back to {{profile.first_name}}'s profile page</a>
+
+<h2>{{profile.first_name}} News Feed</h2>
+    <table>
+
+        {% for status in profile.get_news_feed %}
+        <tr>
+            <td>{{status.timestamp}}</td>
+            <td><a href="{% url 'show_profile_page' status.profile.pk %}">{{status.profile.first_name}} {{status.profile.last_name}}</a></td>
+            <td><img src="{{status.profile.profile_image_url}}" style='max-width: 100px'></td>
+            <td>{{status.message}}</td>
+            <td>
+                {% if msg.image %}
+                <img src='{{status.image.url}}' style='max-width: 100px;'>
+                {% endif %}
+            </td>
+           
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -129,3 +129,10 @@ def post_status_message(request, pk):
     # redirect the user to the show_profile_page view
     url = reverse('show_profile_page', kwargs={'pk': pk})
     return redirect(url)
+
+
+class ShowNewsFeedView(DetailView):
+    ''' displays news feed '''
+
+    model = Profile
+    template_name = 'mini_fb/show_news_feed.html'

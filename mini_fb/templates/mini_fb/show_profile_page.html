@@ -114,12 +114,14 @@
         <td>
             <a href="{% url 'delete_status' profile_pk=profile.pk status_pk=status.pk %}">Delete</a>
         </td>
-
     </tr>
+
 {% endfor %}
 </table>
 
 <br>
+
+<a href="{% url 'news_feed' profile.pk %}">Check out {{profile.first_name}}'s News Feed</a>
 
 <h2>Friends</h2>
 

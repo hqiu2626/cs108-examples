@@ -35,6 +35,14 @@ class Profile(models.Model):
         ''' return all friends for this Profile '''
         return self.friends.all()
 
+    def get_news_feed(self):
+        ''' obtain and return the news feed items '''
+
+        flist = self.friends.all()
+        status = StatusMessage.objects.filter(profile__in=flist)
+
+        return status
+
 class StatusMessage(models.Model):
     ''' Represents status messages '''
 
