@@ -38,10 +38,23 @@ class Profile(models.Model):
     def get_news_feed(self):
         ''' obtain and return the news feed items '''
 
+        # get all friends
         flist = self.friends.all()
+        # filter based on profile
         status = StatusMessage.objects.filter(profile__in=flist)
 
         return status
+
+    
+    def get_friend_suggestions(self):
+        ''' find friends '''
+        # get friends
+        flist = self.get_friends()
+        # exclude those that are already friends
+        profiles = Profile.objects.all().exclude(pk__in=flist).exclude(pk=self.pk)
+        
+        return profiles
+
 
 class StatusMessage(models.Model):
     ''' Represents status messages '''

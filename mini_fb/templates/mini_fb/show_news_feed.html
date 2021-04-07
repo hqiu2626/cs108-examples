@@ -1,6 +1,7 @@
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
+
 <a href="{% url 'show_profile_page' profile.pk %}">Back to {{profile.first_name}}'s profile page</a>
 
 <h2>{{profile.first_name}} News Feed</h2>
