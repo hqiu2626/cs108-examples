@@ -406,35 +406,38 @@ def post_review(request, pk):
 
 def loginemail(request):
     ''' Log in chef user method based off email_address'''
-    context = {}
 
     # find the type of method
     if (request.method == 'POST'):
         email_address = request.POST['email_address'] # check if it is an email_address attribute
 
         # filter based off Chef objects with equivalent email_address
+        # email_address is made as a unique attribute field
         chef = Chef.objects.filter(email_address=email_address)
 
-        pk = chef[0].pk
-        url = reverse('show_chef_page', kwargs={'pk': pk})
-        return redirect(url)
+        if (len(chef) != 0):
+            pk = chef[0].pk # acquires the first and only customer from the list
+            url = reverse('show_chef_page', kwargs={'pk': pk})
+            return redirect(url)
             
-    return render(request, 'project/log_in.html', context)
+    return render(request, 'project/log_in.html') # redirects to home page if unsucessful
 
 
 def loginemailcustomer(request):
     ''' Log in customer user method based off email_address'''
-    context = {}
 
     # find the type of method
     if (request.method == 'POST'):
         email_address = request.POST['email_address'] # check if it is an email_address attribute
 
         # filter based off Customer objects with equivalent email_address
+        # email_address is made as a unique attribute field
         customer = Customer.objects.filter(email_address=email_address)  
+        
+        if (len(customer) != 0):
+            pk = customer[0].pk # acquires the first and only customer from the list
 
-        pk = customer[0].pk
-        url = reverse('show_customer_page', kwargs={'pk': pk})
-        return redirect(url)
+            url = reverse('show_customer_page', kwargs={'pk': pk})
+            return redirect(url)
             
-    return render(request, 'project/log_in.html', context)
+    return render(request, 'project/log_in.html') # redirects to home page if unsucessful
