@@ -1,0 +1,400 @@
+<!-- project/show_profile_page.html -->
+
+<!-- extend from base.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+
+<!-- create table containing name, image, email. and city -->
+<div style="max-width: 500px; margin:auto;">
+
+<table>
+
+<tr>
+    <h1 style="text-align: center;">Chef {{chef}}</h1>
+</tr>
+
+<tr>
+    <h3 style="text-align: center;">{{chef.get_ratings}}</h3>
+</tr>
+
+<tr>
+
+    <td style="padding-left:50px">
+        <img src="{{chef.profile_image_url}}" style ="max-width:400;">
+    </td>
+
+
+</tr>
+
+<tr>
+    <td>
+        <br>
+        <table style="text-align: center;max-width: 500px; margin:auto;">
+            <tr>
+                <td><b>Name</b></td>
+                <td>{{chef}}</td>
+              </tr>
+              <tr>
+                <td><b>Hometown</b></td>
+                <td>{{chef.city}}</td>
+              </tr>
+              <tr>
+                <td><b>Email Address</b></td>
+                <td>{{chef.email_address}}</td>
+              </tr>
+              <tr>
+                <td><b>Phone Number</b></td>
+                <td>{{chef.phone_number}}</td>
+              </tr>
+              <tr>
+                <td><b>Price per day of service ($)</b></td>
+                <td>{{chef.price_per_day_of_service}}</td>
+              </tr>
+        </table>
+    </td>
+
+</tr>
+
+
+</table>
+
+</div>
+
+
+<br>
+<!--  update chef -->
+<a href="{% url 'update_chef' chef.pk %}">Edit this profile </a>
+
+<hr>
+
+
+
+
+<div>
+<!-- create table for recipes that loops over all recipes -->
+<h2 style='max-width: 150px; margin: auto;'> Recipes </h2>
+
+<br>
+
+
+<table>
+    <td style="text-align: center; width:80vw;">
+<table style="border: 1px solid black; text-align: center; max-width: 3000px; margin: auto;">
+
+    <tr>
+        <th style="padding-right:30px;">
+
+        </th>
+        <th style="padding-right:30px;">
+
+        </th>
+    <th style="padding-right:30px;">
+        Name
+    </th>
+    <th style="padding-right:30px;">
+        Image
+    </th>
+    <th style="padding-right:30px;">
+        Ingredients
+    </th>
+    <th style="padding-right:30px;">
+        Preperation Time
+    </th>
+    <th style="padding-right:30px;">
+        Instructions
+    </th>
+    </tr>
+
+    {% for recipe in chef.get_recipes %}
+    <!-- get status.timestamp and status.message -->
+    <tr>
+        <td>
+            <a href="{% url 'update_recipe' recipe.pk %}" style="padding-right:30px;">Update</a>
+        </td>
+        <td style="padding-right:30px;">
+            <a href="{% url 'delete_recipe' chef_pk=chef.pk recipe_pk=recipe.pk %}">Delete</a>
+        </td>
+        <td style="padding-right:30px;">
+            {{recipe.name}}
+        </td>
+
+        <td style="padding-right:30px;">
+            {% if recipe.image %}
+            <img src='{{recipe.image}}' style='max-width: 100;'>
+            {% endif %}
+        </td>
+
+        <td style="padding-right:30px;">
+            {{recipe.ingredients}} 
+        </td>
+
+        <td style="padding-right:30px;">
+            {{recipe.prep_time}} 
+        </td>
+
+        <td style="padding-right:30px;">
+            {{recipe.instructions}} 
+        </td>
+
+    </tr>
+
+
+
+    {% endfor %}
+
+</table>
+
+</td>
+
+<td>
+    <div>
+        <h3 style="text-align: center;"> Add a new recipe </h3>
+        <p style="text-align: center;">If you are {{chef}} and would like to add a new recipe, please fill out the form below.</p>
+
+        <!-- form for adding new recipe for a chef -->
+        <form method="POST" enctype="multipart/form-data" 
+        action="{% url 'post_recipe' chef.pk %}"> <!-- HTTP POST to send data to the server -->
+            {% csrf_token %}
+        
+            <!-- display the form context variable -->
+        
+        
+            <!-- {{form.as_p}}  -->
+        <table>
+            {{create_recipe_form}}
+            <tr>
+                <td>
+        
+                </td>
+                <td>
+                    <input type="submit" value="Share">
+                </td>
+            </tr>
+        </table>
+        
+        </form>
+        </div>
+</td>
+</table>
+
+<br>
+
+</div>
+
+
+<hr>
+
+<!-- create table for booking that loops over all bookings -->
+<h2 style='max-width: 150px; margin: auto;'>Bookings</h2>
+
+<br>
+
+<table style="max-width: 150px; margin: auto;">
+
+
+<td>
+
+<table style="border: 1px solid black; text-align: center; margin-right:100px;">
+
+    <h3 style="padding-left:150px;"> Current listings</h3>
+    <td>
+
+        <tr>
+            <th style="padding-right:30px; padding-left:30px;">
+
+            </th>
+            <th style="padding-right:30px;">
+                Customer
+            </th>
+            <th style="padding-right:30px;">
+                Event
+            </th>
+            <th style="padding-right:30px;">
+                Date
+            </th>
+            <th style="padding-right:30px;">
+                Phone Number
+            </th>
+            <th style="padding-right:30px;">
+                Status
+            </th>
+            </tr>
+
+    </td>
+
+<td>
+{% for booking in chef.get_bookings %}
+    <!-- get status.timestamp and status.message -->
+    <tr>
+        <td style="padding-right:30px;">
+            <a href="{% url 'delete_booking' chef_pk=chef.pk booking_pk=booking.pk %}">Delete</a>
+        </td>
+        <td style="padding-right:30px;">
+            <a href="{% url 'show_customer_page' booking.customer.pk %}">{{booking.customer}}</a>
+        </td>
+
+        <td style="padding-right:30px;">
+            {{booking.event}}
+        </td>
+
+        <td style="padding-right:30px;">
+            {{booking.date}}
+        </td>
+
+        <td style="padding-right:30px;">
+            {{booking.phone_number}}
+        </td>
+        <td style="padding-right:30px;">
+            Pending
+        </td>
+
+    </tr>
+
+
+    {% endfor %}
+</td>
+
+</table>
+
+
+</td>
+
+
+
+<td>
+
+    <div>
+        <h3 style="text-align: center;"> Add a new Booking </h3>
+        <p style="text-align: center;">If you are a customer interested in booking {{chef}} for an event, please fill out the form below.</p>
+        <!-- add a new booking form -->
+        <form method="POST" enctype="multipart/form-data" 
+        action="{% url 'post_booking' chef.pk %}"> <!-- HTTP POST to send data to the server -->
+            {% csrf_token %}
+        
+            <!-- display the form context variable -->
+        
+        
+            <!-- {{form.as_p}}  -->
+        <table>
+            {{create_booking_form}}
+            <tr>
+                <td>
+        
+                </td>
+                <td>
+                    <input type="submit" value="Share">
+                </td>
+            </tr>
+        </table>
+        
+        </form>
+        </div>
+
+</td>
+
+
+</table>
+
+<br>
+
+<hr>
+
+<!-- create table for recipes that loops over all recipes -->
+<h2 style='max-width: 150px; margin: auto;'>Reviews</h2>
+
+
+<br>
+<table style="max-width: 150px; margin: auto;">
+    <td>
+    
+    <table style="border: 1px solid black; text-align: center; width:40vw; margin-right:100px;">
+    
+        <td>
+            <tr>
+                <th style="padding-right:30px;">
+
+                </th>
+                <th style="padding-right:30px;">
+                    Customer
+                </th>
+                <th style="padding-right:30px;">
+                    Review
+                </th>
+                <th style="padding-right:30px;">
+                    Rating
+                </th>
+            </tr>
+    
+        </td>
+    
+    <td>
+    {% for review in chef.get_reviews %}
+        <!-- get status.timestamp and status.message -->
+        <tr>
+            <td style="padding-right:30px;">
+                <a href="{% url 'delete_review' chef_pk=chef.pk review_pk=review.pk %}">Delete</a>
+            </td>
+            <td style="padding-right:30px;">
+                <a href="{% url 'show_customer_page' review.customer.pk %}">{{review.customer}}</a>
+            </td>
+    
+            <td style="padding-right:30px;">
+                {{review.review}}
+            </td>
+            <td style="padding-right:30px;">
+                {{review.rating}} ☆
+            </td>
+        </tr>
+    
+    
+        {% endfor %}
+    </td>
+    
+    </table>
+    
+    
+    </td>
+    
+    
+    
+    <td>
+    
+        <div>
+    
+            <h3 style="text-align: center;"> Add a new Review </h3>
+            <p style="text-align: center;">If you are a customer and would like to leave a review for {{chef}}, please fill out the form below.</p>
+            <!-- form adding a new review from a customer for a chef-->
+            <form method="POST" enctype="multipart/form-data" 
+            action="{% url 'post_review' chef.pk %}"> <!-- HTTP POST to send data to the server -->
+                {% csrf_token %}
+            
+                <!-- display the form context variable -->
+            
+            
+                <!-- {{form.as_p}}  -->
+            <table>
+                {{create_review_form}}
+                <tr>
+                    <td>
+            
+                    </td>
+                    <td>
+                        <input type="submit" value="Share">
+                    </td>
+                </tr>
+            </table>
+            
+            </form>
+            </div>
+    
+    </td>
+    
+    
+    </table>
+
+{% endblock %}
+
+
+

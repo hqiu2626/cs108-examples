@@ -1,0 +1,170 @@
+<!-- project/show_profile_page.html -->
+
+<!-- extend from base.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+
+<!-- create table containing name, image, email. and city -->
+<div style="max-width: 500px; margin:auto;">
+
+<table>
+
+<tr>
+    <h1 style="text-align: center;">Customer {{customer}}</h1>
+</tr>
+
+<tr>
+
+    <td style="padding-left:50px">
+        <img src="{{customer.profile_image_url}}" style ="max-width:400;">
+    </td>
+
+</tr>
+
+<tr>
+    <td>
+        <br>
+        <table style="max-width: 500px; margin:auto;">
+            <tr>
+                <td><b>Name</b></td>
+                <td>{{customer}}</td>
+              </tr>
+              <tr>
+                <td><b>Hometown</b></td>
+                <td>{{customer.city}}</td>
+              </tr>
+              <tr>
+                <td><b>Email Address</b></td>
+                <td>{{customer.email_address}}</td>
+              </tr>
+              <tr>
+                <td><b>Phone Number</b></td>
+                <td>{{customer.phone_number}}</td>
+              </tr>
+        </table>
+    </td>
+
+</tr>
+
+
+
+</table>
+
+</div>
+
+<br>
+<!-- update customer profile -->
+<a href="{% url 'update_customer' customer.pk %}">Edit this profile </a>
+
+<hr>
+
+
+<h2 style='max-width: 150px; margin: auto;'>Bookings</h2>
+
+<br>
+    <!-- create table for bookings that loops over all bookings -->
+    <table style="text-align: center; width:100vw; margin-right:100px;">
+    
+        <td>
+            <tr>
+                <th style="padding-right:30px;">
+                    Chef
+                </th>
+                <th style="padding-right:30px;">
+                    Date
+                </th>
+                <th style="padding-right:30px;">
+
+                </th>
+            </tr>
+    
+        </td>
+    
+    <td>
+    {% for booking in customer.get_bookings %}
+        <!-- get status.timestamp and status.message -->
+        <tr>
+            <td style="padding-right:30px;">
+                <a href="{% url 'show_chef_page' booking.chef.pk %}">{{booking.chef}}</a>
+            </td>
+    
+            <td style="padding-right:30px;">
+                {{booking.date}}
+            </td>
+
+            <td style="padding-right:30px;">
+                <a href="{% url 'delete_booking2' customer_pk=customer.pk booking_pk=booking.pk %}">Delete</a>
+            </td>
+        </tr>
+    
+    
+        {% endfor %}
+    </td>
+    
+    </table>
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+
+<h2 style='max-width: 150px; margin: auto;'>Reviews</h2>
+
+<br>
+    <!-- create table for reviews that loops over all reviews -->
+    <table style="text-align: center; width:100vw; margin-right:100px;">
+    
+        <td>
+            <tr>
+                <th style="padding-right:30px;">
+                    Chef
+                </th>
+                <th style="padding-right:30px;">
+                    Review
+                </th>
+                <th style="padding-right:30px;">
+                    Rating
+                </th>
+                <th style="padding-right:30px;">
+
+                </th>
+            </tr>
+    
+        </td>
+    
+    <td>
+    {% for review in customer.get_reviews %}
+        <!-- get status.timestamp and status.message -->
+        <tr>
+            <td style="padding-right:30px;">
+                <a href="{% url 'show_chef_page' review.chef.pk %}">{{review.chef}}</a>
+            </td>
+    
+            <td style="padding-right:30px;">
+                {{review.review}}
+            </td>
+
+            <td style="padding-right:30px;">
+                {{review.rating}} ☆
+            </td>
+
+            <td>
+                <a href="{% url 'delete_review2' customer_pk=customer.pk review_pk=review.pk %}">Delete</a>
+            </td>
+        </tr>
+    
+    
+        {% endfor %}
+    </td>
+    
+    </table>
+
+<hr>
+
+{% endblock %}

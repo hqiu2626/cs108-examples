@@ -1,0 +1,54 @@
+<!-- extend from base.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h3 style="text-align: center;">Are you sure you want to delete this recipe?</h3>
+
+<!-- table containing information on status -->
+<table style="max-width: 500px; margin:auto; text-align: center;">
+    <tr>
+        <td style="padding-right:30px">
+            {{rcpe.name}}
+        </td>
+
+        <td style="padding-right:30px">
+            {% if rcpe.image %}
+                <img src='{{rcpe.image}}' style='max-width: 100px;'>
+            {% endif %}
+        </td>
+
+        <td style="padding-right:30px">
+            {{rcpe.instructions}}
+        </td>
+
+
+    </tr>
+</table>
+
+<br>
+
+<table style="max-width: 300px; margin:auto;">
+
+    <td>
+    
+    <!-- Confirm the delete -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" name="yes" value="yes">
+    </form>
+    </td>
+    <td>
+    
+    <!-- Cancel the delete -->
+    <form method="GET" action="{% url 'show_chef_page' rcpe.chef.pk %}">
+        {% csrf_token %}
+        <input type="submit" name="no" value="no">
+    </form>
+    </td>
+    </table>
+
+<hr>
+
+
+{% endblock %}

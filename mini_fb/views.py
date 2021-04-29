@@ -4,7 +4,7 @@ from .models import Profile
 from .forms import *
 from django.shortcuts import redirect
 from django.urls import reverse
-from quotes.forms import AddImageForm
+from mini_fb.forms import *
 
 
 # Create your views here.

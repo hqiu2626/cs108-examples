@@ -1,0 +1,24 @@
+<html style="background-image: url('https://image.freepik.com/free-photo/faded-red-watercolor-background_23-2147836044.jpg'); background-size: 100% 100%;">
+
+<head>
+    <title>Chef Finder</title>
+</head>
+<body>
+
+    <!-- navigation links -->
+    <header style='max-width: 600px; margin: auto;'>
+        <a style="padding-right: 10px" href="{% url 'log_in' %}">Home</a>
+        <a style="padding-right: 10px" href="{% url 'show_all_chefs' %}">Chefs</a>
+        <a style="padding-right: 10px" href="{% url 'show_all_customers' %}">Customers</a>
+        <a style="padding-right: 10px" href="{% url 'create_chef' %}">Create New Chef Profile</a>
+        <a href="{% url 'create_customer' %}">Create New Customer Profile</a>
+    </header>
+    <!-- this content block will be filled in by another template
+        which extends this base.html page. -->
+        <hr>
+    {% block content %}
+
+    {% endblock %}
+
+</body>
+</html>

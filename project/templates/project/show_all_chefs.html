@@ -1,0 +1,45 @@
+<!-- project/home.html -->
+
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div>
+
+<h2 style="max-width: 50px; margin:auto;">
+    Chefs
+</h2>
+
+<br>
+
+<!-- display the context data -->
+
+<!-- Create a table to store name, city, and image with headers-->
+<table style="max-width: 300px; margin:auto; text-align: center;">
+<tr>
+    <th style="padding-right:100px;">Name</th>
+    <th style="padding-right:100px;">Location</th>
+    <th style="padding-right:100px;">Image</th>
+</tr>
+
+<!-- For loop to print out each name, city, and image -->
+
+{% for p in chefs %}
+    <tr style="width:200px; text-align: center;">
+        <td style="padding-right:100px;"><a href="{% url 'show_chef_page' p.pk %}">{{p.first_name}} {{p.last_name}}</a></td>
+        <td style="padding-right:100px;">{{p.city}}</td>
+        <td style="padding-right:100px;"><a href="{% url 'show_chef_page' p.pk %}"><img src="{{p.profile_image_url}}" style ="max-width:125;"></a></td>
+    </tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+
+{% endblock %}
+

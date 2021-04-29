@@ -1,0 +1,42 @@
+<!-- project/home.html -->
+
+
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<br>
+
+<h2 style="max-width: 200px; margin:auto;">
+    Customers
+</h2>
+
+<br>
+
+<!-- display the context data -->
+
+<!-- Create a table to store name, city, and image with headers-->
+<table style="max-width: 300px; margin:auto;">
+<tr>
+    <th style="width:200px; padding-right:100px;">Name</th>
+    <th style="width:200px; padding-right:200px;">City</th>
+    <th style="width:200px; padding-right:200px;">Image</th>
+</tr>
+
+<!-- For loop to print out each name, city, and image -->
+
+{% for p in customers %}
+    <tr style="width:200px;">
+        <td><a href="{% url 'show_customer_page' p.pk %}">{{p.first_name}} {{p.last_name}}</a></td>
+        <td>{{p.city}}</td>
+        <td><a href="{% url 'show_customer_page' p.pk %}"><img src="{{p.profile_image_url}}" style ="max-width:125px;"></a></td>
+    </tr>
+
+{% endfor %}
+
+</table>
+
+
+{% endblock %}
+

@@ -1,0 +1,67 @@
+
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<br>
+
+<h1 style="max-width: 400px; margin:auto; padding-left:150px">Welcome to Chef Finder</h1>
+
+<br>
+<p style="text-align:center; max-width: 500px; margin:auto; padding-left:100px;">If you are a chef, you can broadcast your cooking resume.</p>
+<p style="text-align:center; max-width: 500px; margin:auto; padding-left:100px;">If you are a customer, you can view chef profiles, book listed chefs for events, and leave reviews.</p>
+
+
+<br>
+<br>
+<!-- chef log in form -->
+<h2 style="max-width: 200px; margin:auto;">Chef Log In</h2>
+<br>
+<!-- using login method in views -->
+<form style="max-width: 200px; margin:auto;" method="POST" action="{% url 'log_in' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>
+                <p>Email</p>
+            </td>
+            <td>
+                <input type="text" id="email_address" name="email_address">
+            </td>
+            <td>
+                <input style="margin-left:50px;" type="submit" value="Log in">
+            </td>
+        </tr>
+
+    </table>
+
+</form>
+
+<br>
+<br>
+<!-- customer log in form -->
+<h2 style="max-width: 200px; margin:auto;">Customer Log In</h2>
+
+<br>
+<!-- using logincustomer method in views -->
+<form style="max-width: 200px; margin:auto;" method="POST" action="{% url 'log_in_customer' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>
+                <p>Email</p>
+            </td>
+            <td>
+                <input type="text" id="email_address" name="email_address">
+            </td>
+            <td>
+                <input style="margin-left:50px;" type="submit" value="Log in">
+            </td>
+        </tr>
+
+    </table>
+
+</form>
+
+{% endblock %}
